@@ -11,15 +11,29 @@ public class Game {
     public Game() {
         FRAME = new int[GAME_FRAMES][FRAME_ROLL_LIMIT];
         frameCount = GAME_FRAMES - 1;
+        roll = -1;
     }
 
     public void roll(int knockedDownPins) {
-        if (roll++ < FRAME_ROLL_LIMIT && frameCount > -1)
-            FRAME[frameCount][roll-1] = knockedDownPins;
+        if (frameCount >= 0) {
+            if (roll++ >= FRAME_ROLL_LIMIT - 1) {
+                roll = 0;
+                frameCount--;
+            }
+            FRAME[frameCount][roll] = knockedDownPins;
+        }
 
     }
 
     public int score() {
-        return FRAME[frameCount][0] + FRAME[frameCount][1];
+        return getFramesScore();
+    }
+
+    private int getFramesScore() {
+        int score = 0;
+        for (int i = GAME_FRAMES - 1; i >= 0; i--) {
+            score += (FRAME[i][0] + FRAME[i][1]);
+        }
+        return score;
     }
 }
