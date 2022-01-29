@@ -9,18 +9,20 @@ public class Game {
     private int[][] FRAME;
 
     public Game() {
-        FRAME = new int[GAME_FRAMES][FRAME_ROLL_LIMIT];
-        frameCount = GAME_FRAMES - 1;
-        roll = -1;
+        setupGame();
     }
 
     public void roll(int knockedDownPins) {
         if (frameCount >= 0) {
+            FRAME[frameCount][roll] = knockedDownPins;
             if (roll++ >= FRAME_ROLL_LIMIT - 1) {
                 roll = 0;
                 frameCount--;
             }
-            FRAME[frameCount][roll] = knockedDownPins;
+        }
+        if (frameCount == -1) {
+            System.out.printf("Game over, your total score: %d", score());
+            setupGame();
         }
 
     }
@@ -35,5 +37,10 @@ public class Game {
             score += (FRAME[i][0] + FRAME[i][1]);
         }
         return score;
+    }
+
+    private void setupGame(){
+        FRAME = new int[GAME_FRAMES][FRAME_ROLL_LIMIT];
+        frameCount = GAME_FRAMES - 1;
     }
 }
