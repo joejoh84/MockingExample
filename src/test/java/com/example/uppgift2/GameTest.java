@@ -18,7 +18,7 @@ public class GameTest {
 
 
     @Test
-    void FrameRollWithKnockedDownPins2Plus2ShouldReturnScore4() {
+    void frameRollWithKnockedDownPins2Plus2ShouldReturnScore4() {
         Game bg = new Game();
 
         bg.roll(2);
@@ -28,7 +28,7 @@ public class GameTest {
     }
 
     @Test
-    void MoreThanOneFrameRollShouldReturnTotalFramesScore() {
+    void moreThanOneFrameRollShouldReturnTotalFramesScore() {
         Game bg = new Game();
 
         bg.roll(2);
@@ -41,7 +41,7 @@ public class GameTest {
 
     @ParameterizedTest
     @ValueSource(ints = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1})
-    void TenFrameRollsShouldReturn20Points(int knockedDown) {
+    void tenFrameRollsShouldReturn20Points(int knockedDown) {
         pg.roll(knockedDown);
 
         score += pg.score();
@@ -52,7 +52,7 @@ public class GameTest {
     }
 
     @Test
-    void FrameSpareShouldAssignBonusPoints() {
+    void frameSpareShouldAssignBonusPoints() {
         Game bg = new Game();
 
         bg.roll(6);
@@ -62,6 +62,18 @@ public class GameTest {
         bg.roll(4);
 
         assertThat(bg.score()).isEqualTo((6 + (4 + 3)) + (3 + 4));
+    }
+
+    @Test
+    void frameStrikeShouldAssignBonusPoints(){
+        Game bg = new Game();
+
+        bg.roll(10);
+
+        bg.roll(3);
+        bg.roll(6);
+
+        assertThat(bg.score()).isEqualTo((10+(3+6))+(3+6));
     }
 
 }

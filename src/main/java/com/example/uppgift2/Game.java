@@ -1,5 +1,7 @@
 package com.example.uppgift2;
 
+import java.util.Arrays;
+
 public class Game {
     private static final int GAME_FRAMES = 10;
     private static final int FRAME_ROLL_LIMIT = 2;
@@ -17,7 +19,7 @@ public class Game {
     public void roll(int knockedDownPins) {
         if (frameCount >= 0) {
             FRAME[frameCount][roll] = knockedDownPins;
-            if (roll++ >= FRAME_ROLL_LIMIT - 1) {
+            if (roll++ >= FRAME_ROLL_LIMIT - 1 || knockedDownPins == 10) {
                 roll = 0;
                 frameCount--;
             }
@@ -44,7 +46,10 @@ public class Game {
     private int calculateScore(int frameIndex, int x, int y) {
         int val = 0;
         if (frameIndex < 9) {
-            val = (FRAME[frameIndex + 1][0] + FRAME[frameIndex + 1][1] == 10) ? (x + x) +y : x + y;
+            if (FRAME[frameIndex + 1][0] == 10) {
+                val = ((x + y) + (x + y));
+            } else
+                val = (FRAME[frameIndex + 1][0] + FRAME[frameIndex + 1][1] == 10) ? (x + x) + y : x + y;
         } else
             val = x + y;
         return val;
