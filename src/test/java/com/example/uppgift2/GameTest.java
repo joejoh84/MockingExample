@@ -76,4 +76,23 @@ public class GameTest {
         assertThat(bg.score()).isEqualTo((10+(3+6))+(3+6));
     }
 
+    @Test
+    void frameSpareAndStrikeShouldAssignPoints(){
+        Game bg = new Game();
+
+        bg.roll(6);
+        bg.roll(4);
+
+        bg.roll(3);
+        bg.roll(4);
+
+        bg.roll(10);
+
+        bg.roll(3);
+        bg.roll(6);
+
+        assertThat(bg.score()).isEqualTo((6 + (4 + 3)) + (3 + 4) + (10+(3+6))+(3+6));
+
+    }
+
 }
