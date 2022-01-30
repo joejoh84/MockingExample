@@ -40,7 +40,7 @@ public class GameTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1})
+    @ValueSource(ints = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1})
     void TenFrameRollsShouldReturn20Points(int knockedDown) {
         pg.roll(knockedDown);
 
@@ -49,6 +49,19 @@ public class GameTest {
         assertThat(score).isEqualTo(pg.score());
 
 
+    }
+
+    @Test
+    void FrameSpareShouldAssignBonusPoints() {
+        Game bg = new Game();
+
+        bg.roll(6);
+        bg.roll(4);
+
+        bg.roll(3);
+        bg.roll(4);
+
+        assertThat(bg.score()).isEqualTo((6 + (4 + 3)) + (3 + 4));
     }
 
 }
