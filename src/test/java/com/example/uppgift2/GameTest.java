@@ -94,5 +94,14 @@ public class GameTest {
         assertThat(bg.score()).isEqualTo((6 + (4 + 3)) + (3 + 4) + (10+(3+6))+(3+6));
 
     }
+    @Test
+    void tenthFrameSpareShouldGiveFrameExtraRollAndAssignBonusPoints(){
+        int[] ints = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 5, 4};
+        for(int i : ints){
+            pg.roll(i);
+        }
+        score = ((1+1)+(1+1)+(1+1)+(1+1)+(1+1)+(1+1)+(1+1)+(1+1)+(1+1)+(5+(5+4)+4));
+        assertThat(pg.score()).isEqualTo(score);
+    }
 
 }
