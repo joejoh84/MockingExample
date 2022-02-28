@@ -65,7 +65,7 @@ public class GameTest {
     }
 
     @Test
-    void frameStrikeShouldAssignBonusPoints(){
+    void frameStrikeShouldAssignBonusPoints() {
         Game bg = new Game();
 
         bg.roll(10);
@@ -73,11 +73,11 @@ public class GameTest {
         bg.roll(3);
         bg.roll(6);
 
-        assertThat(bg.score()).isEqualTo((10+(3+6))+(3+6));
+        assertThat(bg.score()).isEqualTo((10 + (3 + 6)) + (3 + 6));
     }
 
     @Test
-    void frameSpareAndStrikeShouldAssignPoints(){
+    void frameSpareAndStrikeShouldAssignPoints() {
         Game bg = new Game();
 
         bg.roll(6);
@@ -91,17 +91,29 @@ public class GameTest {
         bg.roll(3);
         bg.roll(6);
 
-        assertThat(bg.score()).isEqualTo((6 + (4 + 3)) + (3 + 4) + (10+(3+6))+(3+6));
+        assertThat(bg.score()).isEqualTo((6 + (4 + 3)) + (3 + 4) + (10 + (3 + 6)) + (3 + 6));
 
     }
+
     @Test
-    void tenthFrameSpareShouldGiveFrameExtraRollAndAssignBonusPoints(){
+    void tenthFrameSpareShouldGiveFrameExtraRollAndAssignBonusPoints() {
         int[] ints = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 5, 4};
-        for(int i : ints){
+        for (int i : ints) {
             pg.roll(i);
         }
-        score = ((1+1)+(1+1)+(1+1)+(1+1)+(1+1)+(1+1)+(1+1)+(1+1)+(1+1)+(5+(5+4)+4));
+        score = ((1 + 1) + (1 + 1) + (1 + 1) + (1 + 1) + (1 + 1) + (1 + 1) + (1 + 1) + (1 + 1) + (1 + 1) + (5 + (5 + 4) + 4));
         assertThat(pg.score()).isEqualTo(score);
     }
 
+    @Test
+    void tenthFrameStrikeShouldGiveFrame2ExtraRollAndAssignBonusPoints() {
+        Game pg = new Game();
+        int[] ints = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 10, 3, 2};
+        for (int i : ints) {
+            pg.roll(i);
+        }
+
+        score = (1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + (10 + (3 + 2)) + (3 + 2));
+        assertThat(pg.score()).isEqualTo(score);
+    }
 }

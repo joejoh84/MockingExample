@@ -27,8 +27,9 @@ public class Game {
                 frameCount--;
                 roll = 0;
             }
-        } else if (roll++ >= FRAME_ROLL_LIMIT - 1 || knockedDownPins == 10) {
-            roll = 0;
+        } else if (((FRAME[frameCount][0] + knockedDownPins) == 10) || FRAME[frameCount][0] == 10) {
+            if (roll++ >= FRAME_ROLL_LIMIT - 1)
+                roll = 0;
         }
 
 
@@ -54,12 +55,12 @@ public class Game {
 
     private int calculateScore(int frameIndex, int x, int y) {
         int val = 0;
-        var lastFrameSpare = FRAME[frameIndex][2];
+        var lastFrameBonus = FRAME[frameIndex][2];
         if (frameIndex < 9) {
             if (FRAME[frameIndex + 1][0] == 10) {
                 val = ((x + y) + (x + y));
             } else {
-                val = determineSpareBonus(frameIndex, x, y, lastFrameSpare);
+                val = determineBonus(frameIndex, x, y, lastFrameBonus);
             }
         } else {
             val = x + y;
@@ -68,10 +69,21 @@ public class Game {
         return val;
     }
 
-    private int determineSpareBonus(int frameIndex, int x, int y, int lastFrameSpare) {
-        return (FRAME[frameIndex + 1][0] + FRAME[frameIndex + 1][1] == 10 || lastFrameSpare > 0)
-                ? frameIndex == 0 ? (x + (x + lastFrameSpare) + lastFrameSpare) : (x + x) + y
-                : x + y;
+    private int determineBonus(int frameIndex, int x, int y, int lastFrameBonus) {
+        return calculateBonus(frameIndex, x, y, lastFrameBonus);
+    }
+
+    private int calculateBonus(int frameIndex, int x, int y, int lastFrameBonus) {
+        int val = x + y;
+
+        if (lastFrameBonus > 0 && x != 10 || FRAME[frameIndex + 1][0] + FRAME[frameIndex + 1][1] == 10)
+            val = frameIndex == 0 ? (x + (x + lastFrameBonus) + lastFrameBonus) : (x + x) + y;
+
+        if (x == 10) {
+            val = (x + (y + lastFrameBonus)) + (y + lastFrameBonus);
+        }
+
+        return val;
     }
 
     private void setupGame() {
