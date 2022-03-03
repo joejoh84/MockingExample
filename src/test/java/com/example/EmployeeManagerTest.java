@@ -28,5 +28,20 @@ class EmployeeManagerTest {
         var epm = new EmployeeManager(employeeRepository_stub, bankService);
         assertThat(epm.payEmployees()).isEqualTo(4);
     }
+    @Test
+    void paymentShouldReturn4TransactionsFromMockitoDoubles(){
+        EmployeeRepository employeeRepository = Mockito.mock(EmployeeRepository.class);
+        BankService bankService = Mockito.mock(BankService.class);
 
+        when(employeeRepository.findAll()).thenReturn(List.of(
+                new Employee("Joel", 2500.00),
+                new Employee("Kris", 2500.00),
+                new Employee("Adam", 2500.00),
+                new Employee("PoPo", 2500.00)
+        ));
+
+        EmployeeManager eManager = new EmployeeManager(employeeRepository, bankService);
+
+        assertThat(eManager.payEmployees()).isEqualTo(4);
+    }
 }
